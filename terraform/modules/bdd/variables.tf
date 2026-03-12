@@ -5,8 +5,14 @@ variable "VM_DB_name" {
 
 variable "VM_DB_ip_address" {
   type        = string
-  description = "Data base virtual machine's ip address"
+  description = "Data base virtual machine's ip address. Must be in 'X.X.X.X/XX' (CIDR) format."
 }
+
+variable "VM_DB_gateway_address" {
+  type        = string
+  description = "Data base virtual machine's ip address. Should be the same as ip address except for a 1 for the last digit."
+}
+
 
 variable "VM_DB_node_name" {
   type        = string
@@ -31,6 +37,19 @@ variable "VM_DB_disk_size" {
   default     = 20
   description = "Data base virtual machine's disk size"
 }
+
+variable "VM_DB_disk_data_store_id" {
+  type        = string
+  default     = "local-lvm"
+  description = "Data base virtual machine's disk location"
+}
+
+variable "VM_DB_disk_interface" {
+  type        = string
+  default     = "virtio0"
+  description = "Data base virtual machine's disk interface"
+}
+
 
 variable "VM_DB_img_file_type" {
   type        = string
