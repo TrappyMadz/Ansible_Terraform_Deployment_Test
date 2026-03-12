@@ -3,7 +3,7 @@ PROXMOX_VE_ENDPOINT =
 PROXMOX_VE_USERNAME =
 PROXMOX_VE_PASSWORD =
 
-# Data base virtual machine variables
+# Database virtual machine variables
 VM_DB_id =
 VM_DB_name =
 VM_DB_network_name =
@@ -23,3 +23,24 @@ VM_DB_user_account_password =
 VM_DB_ssh_key_path =
 VM_DB_qemu_agent_snippet_datastore_name =
 VM_DB_qemu_snippet_file_name =
+
+# Application virtual machine variables
+VM_APP_id =
+VM_APP_name =
+VM_APP_network_name =
+VM_APP_ip_address =
+VM_APP_gateway_address =
+VM_APP_node_name =
+VM_APP_ram =
+VM_APP_vcpu =
+VM_APP_disk_size =
+VM_APP_disk_data_store_id =
+VM_APP_disk_interface =
+VM_APP_img_file_type =
+VM_APP_img_data_store_id =
+VM_APP_img_file_name =
+VM_APP_user_account_username =
+VM_APP_user_account_password =
+VM_APP_ssh_key_path =
+VM_APP_qemu_agent_snippet_datastore_name =
+VM_APP_qemu_snippet_file_name =
