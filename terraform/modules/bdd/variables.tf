@@ -108,12 +108,3 @@ variable "VM_DB_qemu_snippet_file_name" {
   type        = string
   description = "Qemu snippet name for the database"
 }
-
-
-
-
-
-
-
-
-
