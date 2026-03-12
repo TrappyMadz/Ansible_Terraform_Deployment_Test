@@ -3,7 +3,6 @@ variable "VM_DB_id" {
   description = "Data base virtual machine's id"
 }
 
-
 variable "VM_DB_name" {
   type        = string
   description = "Data base virtual machine's name"
@@ -13,7 +12,6 @@ variable "VM_DB_network_name" {
   type        = string
   description = "Data base virtual machine's network name"
 }
-
 
 variable "VM_DB_ip_address" {
   type        = string
@@ -30,7 +28,6 @@ variable "VM_DB_node_name" {
   type        = string
   description = "Data base virtual machine's node name"
 }
-
 
 variable "VM_DB_ram" {
   type        = number
@@ -61,7 +58,6 @@ variable "VM_DB_disk_interface" {
   default     = "virtio0"
   description = "Data base virtual machine's disk interface"
 }
-
 
 variable "VM_DB_img_file_type" {
   type        = string

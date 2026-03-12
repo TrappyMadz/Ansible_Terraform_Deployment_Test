@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_vm" "db_vm" {
+resource "proxmox_virtual_environment_vm" "bdd" {
     stop_on_destroy = true
     
     vm_id = var.VM_DB_id

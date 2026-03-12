@@ -1,0 +1,25 @@
+# Proxmox identifiaction
+PROXMOX_VE_ENDPOINT =
+PROXMOX_VE_USERNAME =
+PROXMOX_VE_PASSWORD =
+
+# Data base virtual machine variables
+VM_DB_id =
+VM_DB_name =
+VM_DB_network_name =
+VM_DB_ip_address =
+VM_DB_gateway_address =
+VM_DB_node_name =
+VM_DB_ram =
+VM_DB_vcpu =
+VM_DB_disk_size =
+VM_DB_disk_data_store_id =
+VM_DB_disk_interface =
+VM_DB_img_file_type =
+VM_DB_img_data_store_id =
+VM_DB_img_file_name =
+VM_DB_user_account_username =
+VM_DB_user_account_password =
+VM_DB_ssh_key_path =
+VM_DB_qemu_agent_snippet_datastore_name =
+VM_DB_qemu_snippet_file_name =
