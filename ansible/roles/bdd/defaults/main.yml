@@ -11,9 +11,6 @@ package_list:
 service_name: postgresql
 pg_conf_dir: "/etc/postgresql/{{ pg_version }}/main"
 
-linux_group_name: cytech_grp
-linux_user_name: cytech_usr
-
 pg_port: 5432
 pg_max_connections: 100
 pg_hba_conf_src: pg_hba.conf.j2
@@ -21,13 +18,9 @@ pg_hba_conf_dest: "{{ pg_conf_dir }}/pg_hba.conf"
 pg_conf_src: postgresql.conf.j2
 pg_conf_dest: "{{ pg_conf_dir }}/postgresql.conf"
 pg_username: postgres
-pg_db_username: cytech_usr
-pg_db_name: cytech
 pg_db_host: localhost
 
 template_files_permissions: "0640"
-
-my_name: simon
 
 sql_script_src: create_user_table.sql.j2
 sql_script_dest: /tmp/create_user_table.sql

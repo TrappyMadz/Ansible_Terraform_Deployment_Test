@@ -1,3 +1,21 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# defaults file for roles/app
+package_list:
+  - python3-pip
+  - python3-venv
+  - python3-virtualenv
+  - libpq-dev
+  - acl
+
+requirements_file_src: requirements.txt
+requirements_file_dest: /home/{{ linux_user_name }}/requirements.txt
+
+venv_name: /home/{{ linux_user_name }}/venv
+
+python_app_src: app.py.j2
+python_app_dest: /home/{{ linux_user_name }}/app.py
+service_src: app.service.j2
+service_dest: /etc/systemd/system/app.service
+service_name: app.service
+
+app_port: 8080
+api_url: http://127.0.0.1:{{ app_port }}

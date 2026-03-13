@@ -1,0 +1,43 @@
+from fastapi import FastAPI
+import psycopg2
+
+app = FastAPI()
+
+@app.get("/")
+async def showName():
+    result = fetchName()
+    return result
+
+def fetchName():
+    db_host = "{{ hostvars['vm-db'].ansible_host }}"
+    db_name = "{{ pg_db_name }}"
+    db_user = "{{ pg_db_username }}"
+    db_password = "{{ pg_db_password }}"
+    my_name = "{{ my_name }}"
+
+    conn = None
+    cursor = None
+    try:
+        conn = psycopg2.connect(f"host='{db_host}' dbname='{db_name}' user='{db_user}' password='{db_password}'")
+        cursor = conn.cursor()
+
+        query = f"SELECT name FROM {db_user} WHERE name = %s;"
+
+        cursor.execute(query, (f"{my_name}",))
+
+        answer = cursor.fetchone()
+
+        if answer:
+            result = {"message": f"hello {answer[0]}"}
+        else:
+            result = {"error": "No entry found"}
+
+    except Exception as error:
+        result = {"error": f"{error}"}
+    finally:
+        if cursor:
+            cursor.close()
+            conn.close()
+            
+    return result
+

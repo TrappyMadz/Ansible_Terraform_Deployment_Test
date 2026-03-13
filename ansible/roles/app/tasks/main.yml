@@ -1,3 +1,65 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/app
+- name: Update packages and install dependences
+  ansible.builtin.apt:
+    name: "{{ package_list }}"
+    update_cache: yes
+  become: true
+
+- name: Group creation
+  ansible.builtin.group:
+    name: "{{ linux_group_name }}"
+    state: present
+  become: true
+
+- name: User creation, add it to the group
+  ansible.builtin.user:
+    name: "{{ linux_user_name }}"
+    group: "{{ linux_group_name }}"
+  become: true
+
+- name: Copy the requirements file
+  ansible.builtin.copy:
+    src: "{{ requirements_file_src }}"
+    dest: "{{ requirements_file_dest }}"
+    owner: "{{ linux_user_name }}"
+    group: "{{ linux_group_name }}"
+  become: true
+
+- name: Installing python requirements
+  ansible.builtin.pip:
+    requirements: "{{ requirements_file_dest }}"
+    virtualenv: "{{ venv_name }}"
+  become: true
+  become_user: "{{ linux_user_name }}"
+
+- name: Template the python app
+  ansible.builtin.template:
+    src: "{{ python_app_src }}"
+    dest: "{{ python_app_dest }}"
+    owner: "{{ linux_user_name }}"
+    group: "{{ linux_group_name }}"
+  become: true
+
+- name: Template the .service
+  ansible.builtin.template:
+    src: "{{ service_src }}"
+    dest: "{{ service_dest }}"
+  become: true
+  notify: Restart service
+
+- name: Starting service
+  ansible.builtin.systemd_service:
+    name: "{{ service_name }}"
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  become: true
+
+- name: Testing the api
+  ansible.builtin.uri:
+    url: "{{ api_url }}"
+  register: api_result
+
+- name: Display the test result
+  ansible.builtin.debug:
+    msg: "{{ api_result.json.message }}"

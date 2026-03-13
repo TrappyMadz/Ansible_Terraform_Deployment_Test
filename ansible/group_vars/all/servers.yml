@@ -1,0 +1,5 @@
+linux_group_name: cytech_grp
+linux_user_name: cytech_usr
+pg_db_username: cytech_usr
+pg_db_name: cytech
+my_name: simon

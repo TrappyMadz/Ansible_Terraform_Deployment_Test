@@ -2,3 +2,7 @@
 - hosts: vm-db
   roles:
     - bdd
+
+- hosts: vm-app
+  roles:
+    - app

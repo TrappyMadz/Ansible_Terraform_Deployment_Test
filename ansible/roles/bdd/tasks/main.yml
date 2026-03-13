@@ -1,7 +1,4 @@
 ---
-- name: Load vault variables
-  ansible.builtin.include_vars: vault.yml
-
 - name: Update packages and install dependences
   ansible.builtin.apt:
     name: "{{ package_list }}"
