@@ -1,0 +1,63 @@
+---
+- name: Load vault variables
+  ansible.builtin.include_vars: vault.yml
+
+- name: Update packages and install dependences
+  ansible.builtin.apt:
+    name: "{{ package_list }}"
+    update_cache: yes
+  become: true
+
+- name: Start the service
+  ansible.builtin.service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: yes
+  become: true
+
+- name: Group creation
+  ansible.builtin.group:
+    name: "{{ linux_group_name }}"
+    state: present
+  become: true
+
+- name: User creation, add it to the groop
+  ansible.builtin.user:
+    name: "{{ linux_user_name }}"
+    group: "{{ linux_group_name }}"
+  become: true
+
+# needs become: true to place the files in protected configurations folder (/etc...)
+- name: Template the security config for postgres
+  ansible.builtin.template:
+    src: "{{ pg_hba_conf_src }}"
+    dest: "{{ pg_hba_conf_dest }}"
+    owner: "{{ pg_username }}"
+    group: "{{ pg_username }}"
+    mode: "{{ template_files_permissions }}"
+  become: true
+  notify: Restart postgres
+
+- name: Template the main config for postgres
+  ansible.builtin.template:
+    src: "{{ pg_conf_src }}"
+    dest: "{{ pg_conf_dest }}"
+    owner: "{{ pg_username }}"
+    group: "{{ pg_username }}"
+    mode: "{{ template_files_permissions }}"
+  become: true
+  notify: Restart postgres
+
+- name: postgres user creation
+  community.postgresql.postgresql_user:
+    name: "{{ pg_db_username }}"
+    password: "{{ pg_db_password }}"
+  become: true
+  become_user: "{{ pg_username }}"
+
+- name: Database creation
+  community.postgresql.postgresql_db:
+    name: "{{ pg_db_name }}"
+    owner: "{{ pg_db_username }}"
+  become: true
+  become_user: "{{ pg_username }}"

@@ -15,11 +15,13 @@ variable "VM_DB_network_name" {
 
 variable "VM_DB_ip_address" {
   type        = string
+  sensitive   = true
   description = "Database virtual machine's ip address. Must be in 'X.X.X.X/XX' (CIDR) format."
 }
 
 variable "VM_DB_gateway_address" {
   type        = string
+  sensitive   = true
   description = "Database virtual machine's ip address. Should be the same as ip address except for a 1 for the last digit."
 }
 

@@ -1,0 +1,44 @@
+data_directory = '/var/lib/postgresql/14/main'
+hba_file = '/etc/postgresql/14/main/pg_hba.conf'
+ident_file = '/etc/postgresql/14/main/pg_ident.conf'
+external_pid_file = '/var/run/postgresql/14-main.pid'
+
+#------------------------------------------------------------------------------
+# CONNECTIONS AND AUTHENTICATION
+#------------------------------------------------------------------------------
+
+# - Connection Settings -
+
+# Listen on local host and the private ip
+listen_addresses = 'localhost, {{ ansible_host }}'
+
+port = {{ pg_port }}
+max_connections = {{ pg_max_connections }}
+
+# - Security and Authentication -
+
+#------------------------------------------------------------------------------
+# RESOURCE USAGE (Réglages par défaut pour un TP)
+#------------------------------------------------------------------------------
+
+shared_buffers = 128MB
+dynamic_shared_memory_type = posix
+
+#------------------------------------------------------------------------------
+# ERROR REPORTING AND LOGGING
+#------------------------------------------------------------------------------
+
+log_timezone = 'Europe/Paris'
+
+#------------------------------------------------------------------------------
+# CLIENT CONNECTION DEFAULTS
+#------------------------------------------------------------------------------
+
+datestyle = 'iso, mdy'
+timezone = 'Europe/Paris'
+lc_messages = 'en_US.UTF-8'
+lc_monetary = 'en_US.UTF-8'
+lc_numeric = 'en_US.UTF-8'
+lc_time = 'en_US.UTF-8'
+
+default_text_search_config = 'pg_catalog.english'

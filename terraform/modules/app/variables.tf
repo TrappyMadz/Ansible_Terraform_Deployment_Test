@@ -15,11 +15,13 @@ variable "VM_APP_network_name" {
 
 variable "VM_APP_ip_address" {
   type        = string
+  sensitive   = true
   description = "Application virtual machine's ip address. Must be in 'X.X.X.X/XX' (CIDR) format."
 }
 
 variable "VM_APP_gateway_address" {
   type        = string
+  sensitive   = true
   description = "Application virtual machine's ip address. Should be the same as ip address except for a 1 for the last digit."
 }
 

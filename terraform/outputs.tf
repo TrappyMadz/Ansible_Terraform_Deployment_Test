@@ -25,6 +25,7 @@ output "app_vm_name_output" {
 
 output "app_vm_ip_address_output" {
   value       = module.app.app_vm_ip_address
+  sensitive   = true
   description = "Application ip address."
 }
 
@@ -60,6 +61,7 @@ output "db_vm_name_output" {
 
 output "db_vm_ip_address_output" {
   value       = module.bdd.db_vm_ip_address
+  sensitive   = true
   description = "database ip address."
 }
 

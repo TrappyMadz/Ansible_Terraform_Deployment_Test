@@ -24,7 +24,8 @@ module "bdd" {
 }
 
 module "app" {
-  source = "./modules/app"
+  source     = "./modules/app"
+  depends_on = [module.bdd]
 
   # Application virtual machine variables
   VM_APP_id                                = var.VM_APP_id
