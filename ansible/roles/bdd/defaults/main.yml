@@ -23,5 +23,11 @@ pg_conf_dest: "{{ pg_conf_dir }}/postgresql.conf"
 pg_username: postgres
 pg_db_username: cytech_usr
 pg_db_name: cytech
+pg_db_host: localhost
 
 template_files_permissions: "0640"
+
+my_name: simon
+
+sql_script_src: create_user_table.sql.j2
+sql_script_dest: /tmp/create_user_table.sql

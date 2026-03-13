@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS {{ pg_db_username }}
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+INSERT INTO {{ pg_db_username }} (name)
+SELECT '{{ my_name }}'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM {{ pg_db_username }}
+    WHERE name = '{{ my_name }}'
+);

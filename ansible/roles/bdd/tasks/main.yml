@@ -21,7 +21,7 @@
     state: present
   become: true
 
-- name: User creation, add it to the groop
+- name: User creation, add it to the group
   ansible.builtin.user:
     name: "{{ linux_user_name }}"
     group: "{{ linux_group_name }}"
@@ -61,3 +61,19 @@
     owner: "{{ pg_db_username }}"
   become: true
   become_user: "{{ pg_username }}"
+
+- name: Template the sql script
+  ansible.builtin.template:
+    src: "{{ sql_script_src }}"
+    dest: "{{ sql_script_dest }}"
+    owner: "{{ pg_username }}"
+    group: "{{ pg_username }}"
+  become: true
+
+- name: Executing the sql script
+  community.postgresql.postgresql_script:
+    login_db: "{{ pg_db_name }}"
+    login_password: "{{ pg_db_password }}"
+    login_user: "{{ pg_db_username }}"
+    login_host: "{{ pg_db_host }}"
+    path: "{{ sql_script_dest }}"
