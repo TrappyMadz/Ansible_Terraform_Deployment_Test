@@ -32,3 +32,8 @@ output "db_vm_username" {
   value       = proxmox_virtual_environment_vm.bdd.initialization[0].user_account[0].username
   description = "The linux login for the database vm"
 }
+
+output "db_vm_id" {
+  value       = proxmox_virtual_environment_vm.bdd.id
+  description = "VM id"
+}

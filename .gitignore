@@ -87,3 +87,4 @@ go.work.sums
 .ansible/
 
 *.ini
+.vault_pass

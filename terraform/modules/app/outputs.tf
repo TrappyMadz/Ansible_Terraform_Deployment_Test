@@ -32,3 +32,8 @@ output "app_vm_username" {
   value       = proxmox_virtual_environment_vm.app.initialization[0].user_account[0].username
   description = "The linux login for the application vm"
 }
+
+output "app_vm_id" {
+  value       = proxmox_virtual_environment_vm.app.id
+  description = "VM id"
+}

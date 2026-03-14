@@ -2,6 +2,7 @@
 PROXMOX_VE_ENDPOINT =
 PROXMOX_VE_USERNAME =
 PROXMOX_VE_PASSWORD =
+SSH_PRIVATE_KEY_PATH =
 
 # Database virtual machine variables
 VM_DB_id =

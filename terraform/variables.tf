@@ -15,6 +15,10 @@ variable "PROXMOX_VE_PASSWORD" {
   description = "Proxmox password"
 }
 
+variable "SSH_PRIVATE_KEY_PATH" {
+  type        = string
+  description = "Local path to the private SSH key. Used by Terraform to generate the Ansible inventory. The key content is never read or stored by Terraform."
+}
 
 # Database virtual machine variables
 variable "VM_DB_id" {

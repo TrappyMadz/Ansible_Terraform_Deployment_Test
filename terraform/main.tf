@@ -48,3 +48,56 @@ module "app" {
   VM_APP_qemu_agent_snippet_datastore_name = var.VM_APP_qemu_agent_snippet_datastore_name
   VM_APP_qemu_snippet_file_name            = var.VM_APP_qemu_snippet_file_name
 }
+
+# Generate ini content
+resource "local_file" "ansible_inventory" {
+  filename             = "../ansible/inventory.ini"
+  content = <<EOT
+[bdd]
+vm-db ansible_host=${module.bdd.db_vm_ip_address}
+
+[app]
+vm-app ansible_host=${module.app.app_vm_ip_address}
+
+[bdd:vars]
+ansible_user=${module.bdd.db_vm_username}
+
+[app:vars]
+ansible_user=${module.app.app_vm_username}
+
+[all:vars]
+ansible_ssh_private_key_file=${var.SSH_PRIVATE_KEY_PATH}
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+EOT
+}
+
+# Resource that don't créate anything, but will launch ansible
+resource "null_resource" "run_ansible" {
+
+  # if there are changes, or if a wm is recreated, ansible will be launched again
+  triggers = {
+    inventory_id = local_file.ansible_inventory.id
+    db_id = module.bdd.db_vm_id
+    app_id = module.app.app_vm_id
+  }
+
+  provisioner "local-exec" {
+    # Using a bash command to wait for ssh to be ready, then start the playbook
+    # for the waiting command : nc -z scan the port without sending any data
+    working_dir = "../ansible"
+    command = <<EOT
+      echo "Waiting for the database vm to start..."
+      until nc -z -v -w5 ${nonsensitive(module.bdd.db_vm_ip_address)} 22; do
+        sleep 2
+      done
+      echo "Database virtual machine started and ssh connection ready !"
+      echo "Waiting for the application vm to start..."
+      until nc -z -v -w5 ${nonsensitive(module.app.app_vm_ip_address)} 22; do
+        sleep 2
+      done
+      echo "Application virtual machine started and ssh connection ready !"
+      ansible-playbook -i inventory.ini main.yml --vault-password-file .vault_pass
+    EOT
+  }
+}
+
